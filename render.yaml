@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: sentinel_project_web
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn sentinel_project.wsgi:application"
