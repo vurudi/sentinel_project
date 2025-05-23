@@ -8,19 +8,16 @@ import os
 import json
 import ee
 
-# Read credentials from environment variable
-credentials_str = os.environ['EE_CREDENTIALS']
-credentials = json.loads(credentials_str)
+# Load EE credentials
+ee_json = os.getenv('EE_CREDENTIALS')
+with open('ee-key.json', 'w') as f:
+    f.write(ee_json)
 
-# Save to a temp file (needed for ee.ServiceAccountCredentials)
-with open("earthengine-credentials.json", "w") as f:
-    json.dump(credentials, f)
-
-# Authenticate
-
-ee.Initialize()
-
-
+# Initialize EE with service account
+ee.Initialize(ee.ServiceAccountCredentials(
+    'sentinel-36@brainbox-448715.iam.gserviceaccount.com',
+    'ee-key.json'
+))
 def index(request):
     if request.method == 'POST':
         form = SentinelForm(request.POST, request.FILES)

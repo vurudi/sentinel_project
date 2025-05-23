@@ -6,18 +6,16 @@ import os
 import os
 import json
 import ee
+# Load EE credentials
+ee_json = os.getenv('EE_CREDENTIALS')
+with open('ee-key.json', 'w') as f:
+    f.write(ee_json)
 
-# Read credentials from environment variable
-credentials_str = os.environ['EE_CREDENTIALS']
-credentials = json.loads(credentials_str)
-
-# Save to a temp file (needed for ee.ServiceAccountCredentials)
-with open("earthengine-credentials.json", "w") as f:
-    json.dump(credentials, f)
-
-
-ee.Initialize()
-
+# Initialize EE with service account
+ee.Initialize(ee.ServiceAccountCredentials(
+    'sentinel-36@brainbox-448715.iam.gserviceaccount.com',
+    'ee-key.json'
+))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
