@@ -1,5 +1,19 @@
 from django import forms
 from datetime import date
+import os
+import json
+import ee
+
+# Read credentials from environment variable
+credentials_str = os.environ['EE_CREDENTIALS']
+credentials = json.loads(credentials_str)
+
+# Save to a temp file (needed for ee.ServiceAccountCredentials)
+with open("earthengine-credentials.json", "w") as f:
+    json.dump(credentials, f)
+
+# Authenticate
+ee.Initialize(ee.ServiceAccountCredentials('', 'earthengine-credentials.json'))
 
 class SentinelForm(forms.Form):
     geojson_file = forms.FileField(label="GeoJSON File")

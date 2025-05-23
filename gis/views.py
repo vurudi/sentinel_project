@@ -4,6 +4,20 @@ from django.conf import settings
 from django.core.files.storage import default_storage
 from .forms import SentinelForm
 from . import utils
+import os
+import json
+import ee
+
+# Read credentials from environment variable
+credentials_str = os.environ['EE_CREDENTIALS']
+credentials = json.loads(credentials_str)
+
+# Save to a temp file (needed for ee.ServiceAccountCredentials)
+with open("earthengine-credentials.json", "w") as f:
+    json.dump(credentials, f)
+
+# Authenticate
+ee.Initialize(ee.ServiceAccountCredentials('', 'earthengine-credentials.json'))
 
 def index(request):
     if request.method == 'POST':

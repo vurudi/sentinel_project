@@ -3,12 +3,27 @@
 from pathlib import Path
 import os
 
+import os
+import json
+import ee
+
+# Read credentials from environment variable
+credentials_str = os.environ['EE_CREDENTIALS']
+credentials = json.loads(credentials_str)
+
+# Save to a temp file (needed for ee.ServiceAccountCredentials)
+with open("earthengine-credentials.json", "w") as f:
+    json.dump(credentials, f)
+
+# Authenticate
+ee.Initialize(ee.ServiceAccountCredentials('', 'earthengine-credentials.json'))
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-DEBUG = False
+DEBUG = True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
