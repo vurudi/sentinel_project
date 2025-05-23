@@ -15,8 +15,8 @@ credentials = json.loads(credentials_str)
 with open("earthengine-credentials.json", "w") as f:
     json.dump(credentials, f)
 
-# Authenticate
-ee.Initialize(ee.ServiceAccountCredentials('', 'earthengine-credentials.json'))
+
+ee.Initialize()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

@@ -13,7 +13,7 @@ with open("earthengine-credentials.json", "w") as f:
     json.dump(credentials, f)
 
 # Authenticate
-ee.Initialize(ee.ServiceAccountCredentials('', 'earthengine-credentials.json'))
+ee.Initialize()
 
 class SentinelForm(forms.Form):
     geojson_file = forms.FileField(label="GeoJSON File")

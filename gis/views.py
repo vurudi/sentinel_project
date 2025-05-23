@@ -17,7 +17,9 @@ with open("earthengine-credentials.json", "w") as f:
     json.dump(credentials, f)
 
 # Authenticate
-ee.Initialize(ee.ServiceAccountCredentials('', 'earthengine-credentials.json'))
+
+ee.Initialize()
+
 
 def index(request):
     if request.method == 'POST':
